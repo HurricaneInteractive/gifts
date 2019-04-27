@@ -2,10 +2,11 @@ import React from "react"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import styled from "@emotion/styled"
 import { White, Primary } from "../../emotion/colours"
+import { Container } from "../../emotion/Wrappers"
 
 const Navigation = ({}) => {
 	return (
-		<NavigationLayout>
+		<NavigationLayout as="nav">
 			<NavLogo>
 				<Link to="/">
 					<svg
@@ -43,12 +44,9 @@ const Navigation = ({}) => {
 
 export default Navigation
 
-const NavigationLayout = styled.nav`
-	width: 100%;
-	margin: 0 auto;
+const NavigationLayout = styled(Container)`
 	display: flex;
 	justify-content: space-between;
-	max-width: 1040px;
 	ul {
 		list-style: none;
 		padding: 0;
