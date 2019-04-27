@@ -1,47 +1,108 @@
-import React from "react"
+import React, { useState, useContext } from "react"
 import styled from "@emotion/styled"
+import AppContext from "../../store/AppContext"
+import Gift from "../../firebase/Gift"
+
 import { Black, Grey, White, Primary } from "../../emotion/colours"
 import { trans } from "../../emotion/mixins"
 import { Input } from "../../emotion/Inputs"
+import { IconExit } from "../../emotion/Icons"
 import { Button } from "../../emotion/Buttons"
 
-const AddItem = ({ isOpen }) => {
+const AddItem = ({ isOpen, viewToggle }) => {
 	// insert hooks here :100:
-	// const FormData = useState(form_state)
-	// const addNewGift = new Gift()
+	const { user } = useContext(AppContext)
+	const [formData, setFormData] = useState({
+		productName: "",
+		productURL: "",
+		productImage: "",
+	})
+
+	const updateFormData = (event) =>
+		setFormData({
+			...formData,
+			[event.target.name]: event.target.value,
+		})
+
+	const { productName, productURL, productImage } = formData
 	if (!isOpen) {
 		return null
+	}
+
+	const HandleAddItem = () => {
+		let allFormData = {
+			product_name: productName,
+			product_url: productURL,
+			product_image: productImage,
+		}
+		console.log("allFormData", allFormData)
+		console.log("user.uid", user.uid)
+
+		const giftItem = new Gift()
+		giftItem
+			.saveGiftData(user.uid, {
+				title: productName,
+				url: productURL,
+				image: productImage,
+			})
+			.then((res) => {
+				console.log(res)
+				viewToggle()
+			})
+			.catch((err) => console.log(err))
 	}
 
 	return (
 		<AddItemLayout>
 			<div>
-				<form>
-					<AddItemContainer>
-						<ImagePreview>
-							{/* <img src="https://scontent-syd2-1.cdninstagram.com/vp/9d85625996acaaad27855b4449e323c6/5D6C2F8F/t51.2885-15/e35/57156421_2614198495320819_5294878624925435158_n.jpg?_nc_ht=scontent-syd2-1.cdninstagram.com" /> */}
-						</ImagePreview>
-						<InputContainer>
-							<div>
-								<InputItem>
-									<label>Product Title</label>
-									<Input placeholder="Product Name" />
-								</InputItem>
-								<InputItem>
-									<label>Product URL</label>
-									<Input placeholder="https://product_url.com/product_id" />
-								</InputItem>
-							</div>
-							<div>
-								<InputItem>
-									<label>Product Image</label>
-									<Input placeholder="Product Image" />
-								</InputItem>
-							</div>
-						</InputContainer>
-					</AddItemContainer>
-					<Button>Add Item</Button>
-				</form>
+				<Exit onClick={viewToggle}>
+					<IconExit />
+				</Exit>
+				<AddItemContainer>
+					<ImagePreview
+						className={productImage ? "hasImage" : null}
+						style={{ backgroundImage: `url('${productImage}')` }}
+					/>
+					<InputContainer>
+						<div>
+							<InputItem>
+								<label>Product Title</label>
+								<Input
+									name="product_name"
+									value={productName}
+									name="productName"
+									onChange={(e) => updateFormData(e)}
+									placeholder="Product Name"
+								/>
+							</InputItem>
+							<InputItem>
+								<label>Product URL</label>
+								<Input
+									name="product_url"
+									value={productURL}
+									name="productURL"
+									onChange={(e) => updateFormData(e)}
+									placeholder="https://product_url.com/product_id"
+								/>
+							</InputItem>
+						</div>
+						<div>
+							<InputItem>
+								<label>Product Image</label>
+								<Input
+									name="product_image_url"
+									value={productImage}
+									name="productImage"
+									onChange={(e) => updateFormData(e)}
+									placeholder="Product Image"
+								/>
+							</InputItem>
+						</div>
+					</InputContainer>
+				</AddItemContainer>
+				<Button className="add_item_submit" onClick={HandleAddItem}>
+					Add Item
+				</Button>
 			</div>
 		</AddItemLayout>
 	)
@@ -75,6 +136,18 @@ const InputItem = styled.div`
 		}
 	}
 `
+const Exit = styled.div`
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	background-color: transparent;
+	fill: ${Grey};
+	width: 100%;
+	height: 100%;
+	max-height: 16px;
+	max-width: 16px;
+	cursor: pointer;
+`
 
 const AddItemLayout = styled.div`
 	background-color: rgba(200, 200, 200, 0.5);
@@ -99,6 +172,10 @@ const AddItemLayout = styled.div`
 		min-width: 240px;
 		min-height: 128px;
 		background-color: ${Black};
+		position: relative;
+		.add_item_submit {
+			float: right;
+		}
 		div {
 			flex-direction: column;
 			justify-content: center;
@@ -124,10 +201,19 @@ const InputContainer = styled.div`
 const ImagePreview = styled.div`
 	display: block;
 	width: 100%;
-	min-width: 248px;
-	min-height: 248px;
+	width: 248px;
+	height: 248px;
 	background-color: ${Grey};
 	position: relative;
+	overflow: hidden;
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	&.hasImage {
+		&:after {
+			content: "";
+		}
+	}
 	&:after {
 		content: "No Image";
 		color: ${Black};
@@ -136,9 +222,5 @@ const ImagePreview = styled.div`
 		line-height: 0;
 		width: 100%;
 		text-align: center;
-	}
-	img {
-		width: 100%;
-		margin: 0;
 	}
 `

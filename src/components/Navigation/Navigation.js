@@ -19,27 +19,25 @@ const Navigation = ({ user }) => {
 
 	return (
 		<NavigationLayout as="nav">
-			<NavLogo>
+			<NavLogo className={user ? "" : "no_auth"}>
 				<Link to="/">
 					<IconLogo />
 				</Link>
 			</NavLogo>
-			<ul>
-				{user ? (
-					<>
-						<li>
-							<Link to="/user">Profile</Link>
-						</li>
-						<li>
-							<a href="#logout" onClick={(e) => logout(e)}>
-								Sign Out
-							</a>
-						</li>
-					</>
-				) : (
-					false
-				)}
-			</ul>
+			{user ? (
+				<ul>
+					<li>
+						<Link to="/user">Profile</Link>
+					</li>
+					<li>
+						<a href="#logout" onClick={(e) => logout(e)}>
+							Sign Out
+						</a>
+					</li>
+				</ul>
+			) : (
+				false
+			)}
 		</NavigationLayout>
 	)
 }
@@ -78,6 +76,12 @@ const NavigationLayout = styled(Container)`
 `
 const NavLogo = styled.div`
 	padding: 16px 8px;
+	&.no_auth {
+		width: 100%;
+		a {
+			margin: 0 auto;
+		}
+	}
 	a {
 		display: block;
 		svg,

@@ -8,8 +8,8 @@ const Card = ({ data }) => {
 	return (
 		<CardLayout>
 			{data.image ? (
-				<CardImageWrapper>
-					<img src={data.image} />
+				<CardImageWrapper className={!data.image ? "no_image" : null}>
+					<div style={{ backgroundImage: `url('${data.image}')` }} />
 				</CardImageWrapper>
 			) : null}
 			<h3>{data.title}</h3>
@@ -59,7 +59,16 @@ const CardLayout = styled.div`
 const CardImageWrapper = styled.div`
 	width: 100%;
 	display: block;
-	img {
-		width: 100%;
+	height: 240px;
+	background-color: ${White};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	> div {
+		width: calc(100% - 16px);
+		height: calc(100% - 16px);
+		background-size: contain;
+		background-position: center center;
+		background-repeat: no-repeat;
 	}
 `

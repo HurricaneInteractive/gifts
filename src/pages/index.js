@@ -5,7 +5,9 @@ import Gift from "../firebase/Gift"
 
 import Layout from "../components/layout"
 import Card from "../components/Card"
+import Toast from "../components/Toast"
 import AddItem from "../components/AddItem"
+
 import { Container } from "../emotion/Wrappers"
 import { Input } from "../emotion/Inputs"
 import { Button } from "../emotion/Buttons"
@@ -14,6 +16,7 @@ import Loading from "../emotion/Loading"
 const Index = () => {
 	const { user, gifts } = useContext(AppContext)
 	const [giftData, setGiftData] = useState(gifts)
+	const [isAddItemOverlay, setaddItemOpen] = useState(false)
 	const [loading, setLoading] = useState(true)
 	const GiftHelper = new Gift()
 
@@ -58,10 +61,14 @@ const Index = () => {
 						))}
 					</>
 				) : (
-					<h2>No Data Found!</h2>
+					<h2>No Items Added!</h2>
 				)}
 			</CardContainer>
 		)
+	}
+
+	const toggleAddItem = () => {
+		isAddItemOverlay ? setaddItemOpen(false) : setaddItemOpen(true)
 	}
 
 	return (
@@ -69,9 +76,10 @@ const Index = () => {
 			<Container>
 				<SearchHeader>
 					<SearchInput type="text" placeholder="add url" />
-					<Button>Add</Button>
+					<Button onClick={toggleAddItem}>Add</Button>
 				</SearchHeader>
-				<AddItem isOpen={false} />
+				<AddItem isOpen={isAddItemOverlay} viewToggle={toggleAddItem} />
+				<Toast props={"hello"} />
 				{renderGiftData()}
 			</Container>
 		</Layout>
@@ -92,4 +100,9 @@ const SearchHeader = styled.div`
 const CardContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 33%);
+	margin: 48px 0;
+	h2 {
+		text-align: center;
+		grid-area: 1 / 2;
+	}
 `
