@@ -2,10 +2,12 @@ import React from "react"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 import styled from "@emotion/styled"
+import Firebase from "../../firebase/Firebase"
+
 import { White, Primary } from "../../emotion/colours"
 import { Container } from "../../emotion/Wrappers"
 import { IconLogo } from "../../emotion/Icons"
-import Firebase from "../../firebase/Firebase"
+import { trans } from "../../emotion/mixins"
 
 const Navigation = ({ user }) => {
 	const firebase = new Firebase()
@@ -76,6 +78,13 @@ const NavigationLayout = styled(Container)`
 `
 const NavLogo = styled.div`
 	padding: 16px 8px;
+	top: 0;
+	position: relative;
+	${trans(0.2)};
+	&:hover {
+		top: -4px;
+		${trans(0.2)};
+	}
 	&.no_auth {
 		width: 100%;
 		a {

@@ -13,6 +13,7 @@ const Card = ({ data }) => {
 				</CardImageWrapper>
 			) : null}
 			<h3>{data.title}</h3>
+			{/* <p>Price $35</p> */}
 			<a href={data.url} target="_blank">
 				View Item
 				<IconExternalLink />
@@ -30,10 +31,13 @@ const CardLayout = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	${trans};
+	${trans()}
 	&:hover {
-		${trans};
 		border: 2px solid ${Primary};
+		${trans()}
+	}
+	h3 {
+		margin: 16px 8px 8px;
 	}
 	a {
 		justify-self: flex-end;

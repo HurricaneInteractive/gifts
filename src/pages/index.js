@@ -11,6 +11,7 @@ import AddItem from "../components/AddItem"
 import { Container } from "../emotion/Wrappers"
 import { Input } from "../emotion/Inputs"
 import { Button } from "../emotion/Buttons"
+import { White } from "../emotion/colours"
 import Loading from "../emotion/Loading"
 
 const Index = () => {
@@ -75,8 +76,11 @@ const Index = () => {
 		<Layout>
 			<Container>
 				<SearchHeader>
-					<SearchInput type="text" placeholder="add url" />
-					<Button onClick={toggleAddItem}>Add</Button>
+					<h1>Get the gifts you actually want</h1>
+					<div>
+						<SearchInput type="text" placeholder="Paste URL" />
+						<Button onClick={toggleAddItem}>Add</Button>
+					</div>
 				</SearchHeader>
 				<AddItem isOpen={isAddItemOverlay} viewToggle={toggleAddItem} />
 				<Toast props={"hello"} />
@@ -95,12 +99,28 @@ const SearchInput = styled(Input)`
 const SearchHeader = styled.div`
 	display: flex;
 	justify-content: center;
+	height: 240px;
+	align-items: center;
+	flex-direction: column;
+	h1 {
+		margin: 0 0 18px;
+	}
 `
 
 const CardContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(3, 33%);
-	margin: 48px 0;
+	grid-template-columns: 1fr;
+	grid-gap: 16px;
+	margin: 36px 0;
+	padding: 24px 0;
+	border-top: 1px solid ${White};
+	@media (min-width: 767px) {
+		grid-template-columns: repeat(2, 1fr);
+		padding: 24px 16px;
+	}
+	@media (min-width: 1039px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 	h2 {
 		text-align: center;
 		grid-area: 1 / 2;

@@ -3,13 +3,18 @@ import styled from "@emotion/styled"
 
 import { Black, Grey, White, Primary } from "../../emotion/colours"
 import { IconExit } from "../../emotion/Icons"
+import { trans, user_select } from "../../emotion/mixins"
 
 const Toast = () => {
+	const handleToastDelete = (e) => {
+		console.log("delete ", e.target)
+	}
+
 	return (
 		<ToastContainer>
 			<ToastItem>
 				Item Added
-				<div>
+				<div onClick={(e) => handleToastDelete(e)}>
 					<IconExit />
 				</div>
 			</ToastItem>
@@ -40,10 +45,12 @@ const ToastItem = styled.div`
 	padding: 8px 4px;
 	position: relative;
 	bottom: 16px;
+	${user_select("none")}
 	cursor: default;
 	&:hover {
 		> div {
 			opacity: 1;
+			${trans(0.2)};
 			&:hover {
 				svg {
 					fill: ${Grey};
@@ -62,6 +69,8 @@ const ToastItem = styled.div`
 		justify-content: center;
 		align-items: center;
 		opacity: 0;
+		cursor: pointer;
+		${trans(0.2)};
 		&:hover {
 			svg {
 				fill: ${Grey};
@@ -73,7 +82,7 @@ const ToastItem = styled.div`
 			fill: ${Primary};
 			width: 100%;
 			height: 100%;
-			cursor: pointer;
+			pointer-events: none;
 		}
 	}
 `
