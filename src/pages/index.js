@@ -12,7 +12,7 @@ import { Button } from "../emotion/Buttons"
 import Loading from "../emotion/Loading"
 
 const Index = () => {
-	const { user, gifts, authLoading } = useContext(AppContext)
+	const { user, gifts } = useContext(AppContext)
 	const [giftData, setGiftData] = useState(gifts)
 	const [loading, setLoading] = useState(true)
 	const GiftHelper = new Gift()
@@ -71,6 +71,7 @@ const Index = () => {
 					<SearchInput type="text" placeholder="add url" />
 					<Button>Add</Button>
 				</SearchHeader>
+				<AddItem isOpen={false} />
 				{renderGiftData()}
 			</Container>
 		</Layout>
