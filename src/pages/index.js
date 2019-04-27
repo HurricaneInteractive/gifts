@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 
 import Layout from "../components/layout"
 import Card from "../components/Card"
+import AddItem from "../components/AddItem"
 import { Container } from "../emotion/Wrappers"
 import { Input } from "../emotion/Inputs"
 import { Button } from "../emotion/Buttons"
@@ -28,9 +29,10 @@ const Index = () => (
 				<SearchInput type="text" placeholder="add url" />
 				<Button>Add</Button>
 			</SearchHeader>
-			<CardContainer>
+			{/* <CardContainer>
 				<Card data={data} />
-			</CardContainer>
+			</CardContainer> */}
+			<AddItem isOpen={false} />
 		</Container>
 	</Layout>
 )

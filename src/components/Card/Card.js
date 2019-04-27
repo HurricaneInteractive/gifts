@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "@emotion/styled"
 import { Black, Grey, White, Primary } from "../../emotion/colours"
-import { Trans } from "../../emotion/mixins"
+import { trans, rem } from "../../emotion/mixins"
+import { IconExternalLink } from "../../emotion/Icons"
 
 const Card = ({ data }) => {
 	return (
@@ -12,9 +13,10 @@ const Card = ({ data }) => {
 				</CardImageWrapper>
 			) : null}
 			<h3>{data.title}</h3>
-			<h6>{data.category}</h6>
+			{data.category ? <h6>{data.category}</h6> : null}
 			<a href={data.url} target="_blank">
 				View Item
+				<IconExternalLink />
 			</a>
 		</CardLayout>
 	)
@@ -29,9 +31,9 @@ const CardLayout = styled.div`
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	${Trans};
+	${trans};
 	&:hover {
-		${Trans};
+		${trans};
 		border: 2px solid ${Primary};
 	}
 	a {
@@ -40,9 +42,18 @@ const CardLayout = styled.div`
 		text-align: right;
 		text-decoration: none;
 		color: ${Primary};
+		text-transform: uppercase;
+		margin: 4px;
+		font-size: ${rem(12)};
+		font-weight: 400;
 		cursor: pointer;
 		&:hover {
 			color: ${White};
+		}
+		svg {
+			margin: 0 0 0 4px;
+			max-height: 12px;
+			height: 100%;
 		}
 	}
 `
