@@ -13,7 +13,6 @@ const Card = ({ data }) => {
 				</CardImageWrapper>
 			) : null}
 			<h3>{data.title}</h3>
-			{data.category ? <h6>{data.category}</h6> : null}
 			<a href={data.url} target="_blank">
 				View Item
 				<IconExternalLink />

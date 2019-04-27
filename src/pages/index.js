@@ -55,6 +55,7 @@ const Index = () => {
 					<SearchInput type="text" placeholder="add url" />
 					<Button>Add</Button>
 				</SearchHeader>
+				<AddItem isOpen={true} />
 				{loading ? (
 					<Loading />
 				) : (
