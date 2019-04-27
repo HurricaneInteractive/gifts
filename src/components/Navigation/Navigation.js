@@ -1,11 +1,15 @@
-import React from "react"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import React, { useContext } from "react"
+import { Link } from "react-router-dom"
 import styled from "@emotion/styled"
 import { White, Primary } from "../../emotion/colours"
 import { Container } from "../../emotion/Wrappers"
 import { IconLogo } from "../../emotion/Icons"
+import AppContext from "../../store/AppContext"
 
-const Navigation = ({}) => {
+const Navigation = () => {
+	const context = useContext(AppContext)
+	const { user } = context
+
 	return (
 		<NavigationLayout as="nav">
 			<NavLogo>
@@ -20,9 +24,13 @@ const Navigation = ({}) => {
 				<li>
 					<Link to="/user">User</Link>
 				</li>
-				<li>
-					<Link to="/auth">Login</Link>
-				</li>
+				{user ? (
+					false
+				) : (
+					<li>
+						<Link to="/auth">Login</Link>
+					</li>
+				)}
 			</ul>
 		</NavigationLayout>
 	)
