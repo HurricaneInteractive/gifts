@@ -12,7 +12,7 @@ import { Button } from "../emotion/Buttons"
 import Loading from "../emotion/Loading"
 
 const Index = () => {
-	const { user, gifts } = useContext(AppContext)
+	const { user, gifts, authLoading } = useContext(AppContext)
 	const [giftData, setGiftData] = useState(gifts)
 	const [loading, setLoading] = useState(true)
 	const GiftHelper = new Gift()
@@ -46,7 +46,23 @@ const Index = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user])
 
-	console.log("gift data", giftData)
+	const renderGiftData = () => {
+		return loading ? (
+			<Loading />
+		) : (
+			<CardContainer>
+				{giftData && giftData.length > 0 ? (
+					<>
+						{giftData.map((item, i) => (
+							<Card data={item} key={i} />
+						))}
+					</>
+				) : (
+					<h2>No Data Found!</h2>
+				)}
+			</CardContainer>
+		)
+	}
 
 	return (
 		<Layout>
@@ -55,21 +71,7 @@ const Index = () => {
 					<SearchInput type="text" placeholder="add url" />
 					<Button>Add</Button>
 				</SearchHeader>
-				{loading ? (
-					<Loading />
-				) : (
-					<CardContainer>
-						{giftData && giftData.length > 0 ? (
-							<>
-								{giftData.map((item, i) => (
-									<Card data={item} key={i} />
-								))}
-							</>
-						) : (
-							<h2>No Data Found!</h2>
-						)}
-					</CardContainer>
-				)}
+				{renderGiftData()}
 			</Container>
 		</Layout>
 	)
