@@ -12,7 +12,7 @@ export default class AppProvider extends Component {
 	state = {
 		user: null,
 		authLoading: true,
-		giftRequests: null,
+		gifts: null,
 	}
 
 	componentDidMount = () => {
