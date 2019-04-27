@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "@emotion/styled"
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom"
 
 // Pages
 import Index from "./pages/index"
@@ -26,4 +26,5 @@ export default App
 
 const PageWrapper = styled.div`
 	background-color: ${Black};
+	min-height: 100vh;
 `
