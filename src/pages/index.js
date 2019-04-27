@@ -5,6 +5,7 @@ import Gift from "../firebase/Gift"
 
 import Layout from "../components/layout"
 import Card from "../components/Card"
+import AddItem from "../components/AddItem"
 import { Container } from "../emotion/Wrappers"
 import { Input } from "../emotion/Inputs"
 import { Button } from "../emotion/Buttons"
