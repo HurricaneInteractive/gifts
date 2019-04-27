@@ -71,6 +71,8 @@ const NavLogo = styled.div`
 		display: block;
 		svg,
 		path {
+			height: 100%;
+			width: 100%;
 			max-height: 48px;
 			fill: ${Primary};
 		}
