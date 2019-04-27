@@ -42,6 +42,14 @@ class Firebase {
 			throw new Error(e.message)
 		}
 	}
+
+	logoutUser = async () => {
+		try {
+			return await this.auth.signOut()
+		} catch (e) {
+			throw new Error(e.message)
+		}
+	}
 }
 
 export default Firebase

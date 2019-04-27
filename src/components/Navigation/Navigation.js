@@ -1,14 +1,21 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 import styled from "@emotion/styled"
 import { White, Primary } from "../../emotion/colours"
 import { Container } from "../../emotion/Wrappers"
 import { IconLogo } from "../../emotion/Icons"
-import AppContext from "../../store/AppContext"
+import Firebase from "../../firebase/Firebase"
 
-const Navigation = () => {
-	const context = useContext(AppContext)
-	const { user } = context
+const Navigation = ({ user }) => {
+	const firebase = new Firebase()
+
+	const logout = (e) => {
+		e.preventDefault()
+
+		// eslint-disable-next-line no-alert
+		firebase.logoutUser().then(() => alert("Signed Out Successfully"))
+	}
 
 	return (
 		<NavigationLayout as="nav">
@@ -18,18 +25,19 @@ const Navigation = () => {
 				</Link>
 			</NavLogo>
 			<ul>
-				<li>
-					<Link to="/">Home</Link>
-				</li>
-				<li>
-					<Link to="/user">User</Link>
-				</li>
 				{user ? (
-					false
+					<>
+						<li>
+							<Link to="/user">Profile</Link>
+						</li>
+						<li>
+							<a href="#logout" onClick={(e) => logout(e)}>
+								Sign Out
+							</a>
+						</li>
+					</>
 				) : (
-					<li>
-						<Link to="/auth">Login</Link>
-					</li>
+					false
 				)}
 			</ul>
 		</NavigationLayout>
@@ -37,6 +45,15 @@ const Navigation = () => {
 }
 
 export default Navigation
+
+Navigation.defaultProps = {
+	user: null,
+}
+
+Navigation.propTypes = {
+	// eslint-disable-next-line react/forbid-prop-types
+	user: PropTypes.object,
+}
 
 const NavigationLayout = styled(Container)`
 	display: flex;
