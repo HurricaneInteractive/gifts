@@ -28,6 +28,10 @@ body {
 		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 /**
  * Render the `main` element consistently in IE.
  */
